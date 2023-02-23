@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
@@ -36,7 +35,7 @@ func main() {
 			robotgo.Move(80, 80)
 			sx, sy := robotgo.GetScreenSize()
 			println("get screen size: ", sx, sy)
-			button.Tapped(&fyne.PointEvent{})
+			// button.Tapped(&fyne.PointEvent{})
 
 		}
 	}()

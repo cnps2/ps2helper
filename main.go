@@ -9,6 +9,8 @@ import (
 
 func main() {
 	fmt.Println("Press F10 to trigger the command")
+	// 提示Ctrl+C退出
+	fmt.Println("Press Ctrl+C to exit")
 	for {
 		if robotgo.AddEvent("f10") { // 监听F10
 			robotgo.Click()                    // 鼠标单击

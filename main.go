@@ -1,44 +1,23 @@
 package main
 
 import (
-	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
+	"fmt"
+	"time"
+
 	"github.com/go-vgo/robotgo"
-	"golang.design/x/hotkey"
 )
 
 func main() {
-	w := app.New().NewWindow("ps2helper")
-	label := widget.NewLabel("Hello golang.design!")
-	button := widget.NewButton("Hi!", func() {
-		label.SetText("Welcome :)")
-		println("Hi!")
-	})
-	w.SetContent(container.NewVBox(label, button))
-
-	go func() {
-		// Register a desired hotkey.
-		hk := hotkey.New([]hotkey.Modifier{}, hotkey.KeyF10)
-		if err := hk.Register(); err != nil {
-			panic("hotkey registration failed")
+	fmt.Println("Press F10 to trigger the command")
+	for {
+		if robotgo.AddEvent("f10") { // 监听F10
+			robotgo.Click()                    // 鼠标单击
+			time.Sleep(10 * time.Millisecond)  // 延时10ms
+			robotgo.Click()                    // 鼠标单击
+			time.Sleep(10 * time.Millisecond)  // 延时10ms
+			robotgo.Toggle("left")             // 鼠标左键按下
+			time.Sleep(500 * time.Millisecond) // 延时500ms
+			robotgo.Toggle("left", "up")       // 鼠标左键弹起
 		}
-		// Start listen hotkey event whenever it is ready.
-		for range hk.Keydown() {
-			robotgo.Click()
-			robotgo.MilliSleep(10)
-			robotgo.Click()
-			robotgo.MilliSleep(10)
-			robotgo.Toggle()
-			robotgo.MilliSleep(600)
-			robotgo.Toggle("left", "up")
-			robotgo.Move(80, 80)
-			sx, sy := robotgo.GetScreenSize()
-			println("get screen size: ", sx, sy)
-			// button.Tapped(&fyne.PointEvent{})
-
-		}
-	}()
-
-	w.ShowAndRun()
+	}
 }
